@@ -1792,6 +1792,14 @@ document.addEventListener("contextmenu", e => {
     for (const key in pkmn[el.dataset.pkmnEditor].moves) {
 
     let moveId = pkmn[el.dataset.pkmnEditor].moves[key];
+
+
+    //safefails if your slots magically disapear
+    if (pkmn[el.dataset.pkmnEditor].moves.slot1 == undefined) pkmn[el.dataset.pkmnEditor].moves.slot1 = undefined
+    if (pkmn[el.dataset.pkmnEditor].moves.slot2 == undefined) pkmn[el.dataset.pkmnEditor].moves.slot2 = undefined
+    if (pkmn[el.dataset.pkmnEditor].moves.slot3 == undefined) pkmn[el.dataset.pkmnEditor].moves.slot3 = undefined
+    if (pkmn[el.dataset.pkmnEditor].moves.slot4 == undefined) pkmn[el.dataset.pkmnEditor].moves.slot4 = undefined
+
     
     if (moveId == null) {
             const divMove = document.createElement("div") 
@@ -1853,11 +1861,14 @@ document.addEventListener("contextmenu", e => {
 
 const movepool = pkmn[el.dataset.pkmnEditor].movepool
 
-const sortedMovepool = [...movepool].sort((a, b) => {
+const sortedMovepool = movepool
+  //safefail
+  .filter(m => m != null)
+  .sort((a, b) => {
     const powerA = move[a].power ?? 0
     const powerB = move[b].power ?? 0
     return powerB - powerA
-})
+  })
 
     for (const e of sortedMovepool) {
 
@@ -6410,3 +6421,4 @@ window.addEventListener('load', function() {
 
     //updateTeamExp()
 });
+
