@@ -6427,7 +6427,7 @@ training.level = {
 
 training.iv1 = { //disapears if you have more than x ivs
     name: `IV Training I`,
-    info: `Gain 2 random IV stars, up to a maximum of 2 per stat`,
+    info: `Gain 2 random IV stars`,
     tier: 1,
     color: `#699edf`,
     condition: function() {
@@ -6480,7 +6480,7 @@ training.iv1 = { //disapears if you have more than x ivs
 
 training.iv2 = { //doesnt appear until you have more than x ivs
     name: `IV Training II`,
-    info: `Gain 2 random IV stars, up to a maximum of 4 per stat`,
+    info: `Gain 2 random IV stars`,
     tier: 2,
     color: `#699edf`,
     condition: function() {
@@ -6533,7 +6533,7 @@ training.iv2 = { //doesnt appear until you have more than x ivs
 
 training.iv3 = { //doesnt appear until you have more than x ivs
     name: `IV Training III`,
-    info: `Gain 2 random IV stars, up to a maximum of 6 per stat`,
+    info: `Gain 2 random IV stars`,
     tier: 3,
     color: `#699edf`,
     condition: function() {
@@ -6684,12 +6684,12 @@ function setTrainingMenu() {
     for (const i in training){
 
     if (saved.trainingPokemon==undefined) continue
-    if (training[i].condition && training[i].condition()!=true) continue
 
     const div = document.createElement("div");
     div.className = "training-module";
     div.style.borderColor = training[i].color
     div.dataset.training = i
+    if (training[i].condition && training[i].condition()!=true) div.style.filter = "brightness(0.5)"
 
     div.innerHTML = `
     <span>${training[i].name}</span>
@@ -6704,6 +6704,7 @@ function setTrainingMenu() {
 
 
     div.addEventListener("click", e => { 
+        if (training[i].condition && training[i].condition()!=true) return
         areas.training.tier = training[i].tier
         areas.training.currentTraining = i
         afkSeconds = 0
