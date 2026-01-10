@@ -27,6 +27,10 @@ function saveGame() {
     if (areas[i].type=="frontier") data[i].tier = areas[i].tier;
     if (areas[i].type=="frontier") data[i].reward = areas[i].reward;
     if (areas[i].type=="frontier") data[i].background = areas[i].background;
+    if (areas[i].id=="training") data[i].tier = areas[i].tier;
+    if (areas[i].id=="training") data[i].currentTraining = areas[i].currentTraining;
+    if (areas[i].id=="wildlifePark") data[i].spawns = areas[i].spawns;
+    if (areas[i].id=="wildlifePark") data[i].icon = areas[i].icon;
   }
 
   // Pokémon
@@ -45,6 +49,7 @@ function saveGame() {
     data[i].shinyDisabled = pkmn[i].shinyDisabled;
     data[i].hiddenAbilityUnlocked = pkmn[i].hiddenAbilityUnlocked;
     data[i].tag = pkmn[i].tag;
+    data[i].ribbons = pkmn[i].ribbons;
   }
 
   localStorage.setItem("gameData", JSON.stringify(data));
@@ -79,7 +84,12 @@ function loadGame() {
     if (areas[i].type=="frontier") areas[i].tier = data[i].tier;
     if (areas[i].type=="frontier") areas[i].reward = data[i].reward;
     if (areas[i].type=="frontier") areas[i].background = data[i].background;
-    }
+    if (areas[i].id=="training") areas[i].tier = data[i].tier;
+    if (areas[i].id=="training") areas[i].currentTraining = data[i].currentTraining;
+    if (areas[i].id=="wildlifePark") areas[i].spawns = data[i].spawns;
+    if (areas[i].id=="wildlifePark") areas[i].icon = data[i].icon;
+
+  }
   }
 
   for (const i in pkmn) {
@@ -97,6 +107,7 @@ function loadGame() {
       pkmn[i].shinyDisabled = data[i].shinyDisabled;
       pkmn[i].hiddenAbilityUnlocked = data[i].hiddenAbilityUnlocked;
       pkmn[i].tag = data[i].tag;
+      pkmn[i].ribbons = data[i].ribbons;
     }
   }
 

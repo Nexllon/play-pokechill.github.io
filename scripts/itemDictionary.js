@@ -21,6 +21,7 @@ item.charcoal = {
 
 item.dragonFang = {
     type: "held",
+    evo: true,
     info: function() {return `When held: Increase the power of Dragon-Type moves by ${this.power()}%`},
     power : function() { return 10+(10*returnItemLevel(this.id))}
 }
@@ -46,7 +47,7 @@ item.magnet = {
 item.metalCoat = {
     type: "held",
     evo: true,
-    info: function() {return `When held: Increase the power of Metal-Type moves by ${this.power()}%`},
+    info: function() {return `When held: Increase the power of Steel-Type moves by ${this.power()}%`},
     power : function() { return 10+(10*returnItemLevel(this.id))}
 }
 
@@ -111,7 +112,77 @@ item.twistedSpoon = {
 }
 
 
+item.eviolite = {
+    type: "held",
+    info: function() {return `When held: If a Pokemon has not fully evolved, increase overall defense by x${this.power()}`},
+    power : function() { return 1+(returnItemLevel(this.id)/5)}
+}
 
+item.lightClay = {
+    type: "held",
+    info: function() {return `When held: Increases the duration of positive buffs used by 1 turn and increases damage dealt by ${this.power()}%`},
+    power : function() { return 5+(5*returnItemLevel(this.id))}
+}
+
+item.mentalHerb = {
+    type: "held",
+    info: function() {return `When held: Decreases the duration of negative buffs received by 1 turn and decreases damage taken by ${this.power()}%`},
+    power : function() { return 5+(5*returnItemLevel(this.id))}
+}
+
+item.flameOrb = {
+    type: "held",
+    info: function() {return `When held: Increases the Special Attack of the user by x${this.power()}, but inflicts ${tagBurn}`},
+    power : function() { return 1+(0.15*returnItemLevel(this.id))}
+}
+
+item.toxicOrb = {
+    type: "held",
+    info: function() {return `When held: Increases the Attack of the user by x${this.power()}, but inflicts ${tagPoisoned}`},
+    power : function() { return 1+(0.15*returnItemLevel(this.id))}
+}
+
+item.choiceBand = {
+    type: "held",
+    info: function() {return `When held: Increases the Attack of the user by x${this.power()}, but prevents them from switching`},
+    power : function() { return 1+(0.15*returnItemLevel(this.id))}
+}
+
+item.choiceSpecs = {
+    type: "held",
+    info: function() {return `When held: Increases the Special Attack of the user by x${this.power()}, but prevents them from switching`},
+    power : function() { return 1+(0.15*returnItemLevel(this.id))}
+}
+
+item.lifeOrb = {
+    type: "held",
+    info: function() {return `When held: Increases the damage of the user by x${this.power()}, but loses 1/10 of its max HP per turn`},
+    power : function() { return 1+(0.2*returnItemLevel(this.id))}
+}
+
+item.luckIncense = {
+    type: "held",
+    info: function() {return `When held: Increases the weight of rare item drops by ${this.power()}%. Works always for everyone regardless of the holder`},
+    power : function() { return 0.5+(0.5*returnItemLevel(this.id))}
+}
+
+item.pureIncense = {
+    type: "held",
+    info: function() {return `When held: Increases the weight of rare pokemon by ${this.power()}%. Works always for everyone regardless of the holder`},
+    power : function() { return 0.5+(0.5*returnItemLevel(this.id))}
+}
+
+item.luckyEgg = {
+    type: "held",
+    info: function() {return `When held: Increases the experience gained by the pokemon by ${this.power()}%`},
+    power : function() { return 40+(10*returnItemLevel(this.id))}
+}
+
+item.shinyCharm = {
+    type: "held",
+    info: function() {return `When held: Increases the chance of encountering a wild shiny pokemon by ${this.power()}%. Works always for everyone regardless of the holder`},
+    power : function() { return 0+(10*returnItemLevel(this.id))}
+}
 
 
 item.occaBerry = {
@@ -211,83 +282,42 @@ item.babiriBerry = {
 }
 
 
-item.luckIncense = {
-    type: "held",
-    info: function() {return `When held: Increases the weight of rare item drops by ${this.power()}%`},
-    power : function() { return 0.5+(0.5*returnItemLevel(this.id))}
-}
 
-item.pureIncense = {
-    type: "held",
-    info: function() {return `When held: Increases the weight of rare pokemon by ${this.power()}%`},
-    power : function() { return 0.5+(0.5*returnItemLevel(this.id))}
-}
-
-item.luckyEgg = {
-    type: "held",
-    info: function() {return `When held: Increases the experience gained by the pokemon by ${this.power()}%`},
-    power : function() { return 40+(10*returnItemLevel(this.id))}
-}
-
-item.shinyCharm = {
-    type: "held",
-    info: function() {return `When held: Increases the chance of encountering a wild shiny pokemon by ${this.power()}%`},
-    power : function() { return 0+(10*returnItemLevel(this.id))}
-}
 
 item.dampRock = {
     type: "held",
     info: function() {return `When held: Increases the duration of ${tagRainy} weather by ${this.power()} turns`},
-    power : function() { return 2+(1*returnItemLevel(this.id))}
+    power : function() { return 5+(2*returnItemLevel(this.id))}
 }
 
 item.heatRock = {
     type: "held",
     info: function() {return `When held: Increases the duration of ${tagSunny} weather by ${this.power()} turns`},
-    power : function() { return 2+(1*returnItemLevel(this.id))}
+    power : function() { return 5+(2*returnItemLevel(this.id))}
 }
 
 item.icyRock = {
     type: "held",
     info: function() {return `When held: Increases the duration of ${tagHail} weather by ${this.power()} turns`},
-    power : function() { return 2+(1*returnItemLevel(this.id))}
+    power : function() { return 5+(2*returnItemLevel(this.id))}
 }
 
 item.smoothRock = {
     type: "held",
     info: function() {return `When held: Increases the duration of ${tagSandstorm} weather by ${this.power()} turns`},
-    power : function() { return 2+(1*returnItemLevel(this.id))}
+    power : function() { return 5+(2*returnItemLevel(this.id))}
 }
 
-item.flameOrb = {
-    type: "held",
-    info: function() {return `When held: Increases the Special Attack of the user by x${this.power()}, but inflicts ${tagBurn}`},
-    power : function() { return 1+(0.15*returnItemLevel(this.id))}
-}
 
-item.toxicOrb = {
-    type: "held",
-    info: function() {return `When held: Increases the Attack of the user by x${this.power()}, but inflicts ${tagPoisoned}`},
-    power : function() { return 1+(0.15*returnItemLevel(this.id))}
-}
 
-item.choiceBand = {
-    type: "held",
-    info: function() {return `When held: Increases the Attack of the user by x${this.power()}, but prevents them from switching`},
-    power : function() { return 1+(0.15*returnItemLevel(this.id))}
-}
 
-item.choiceSpecs = {
-    type: "held",
-    info: function() {return `When held: Increases the Special Attack of the user by x${this.power()}, but prevents them from switching`},
-    power : function() { return 1+(0.15*returnItemLevel(this.id))}
-}
 
-item.lifeOrb = {
-    type: "held",
-    info: function() {return `When held: Increases the damage of the user by x${this.power()}, but loses 1/10 of its max HP per turn`},
-    power : function() { return 1+(0.2*returnItemLevel(this.id))}
-}
+
+
+
+
+
+
 
 
 item.timeCandy = {
@@ -303,6 +333,88 @@ item.timeCandyXL = {
     effect: function() {  if(afkSeconds<=0) {afkSeconds = 30*60; this.got--; updateItemBag()} else {document.getElementById("tooltipTop").style.display = "none"; document.getElementById("tooltipMid").style.display = "none"; document.getElementById("tooltipBottom").innerHTML = `Can't do that right now`; openTooltip()}  },
     info: function() {return `Fast-forwards battle time by 30 minutes. Must be used while battling`},
 }
+
+
+
+item.bottleCap = {
+    type: "key",
+    info: function() {return `Obtained when acquiring an exceeding number of items. Can be exchanged in the Poke-Mart`},
+}
+
+item.goldenBottleCap = {
+    type: "key",
+    info: function() {return `Obtained in the Battle Frontier. Can be exchanged in the Poke-Mart`},
+}
+
+item.autoRefightTicket = {
+    type: "key",
+    info: function() {return `Can be used to automatically refight battles. Cannot refight while the browser is closed. Consumed once a battle is won`},
+}
+
+
+item.rareCandy = {
+    type: 'key',
+    itemToUse: true,
+    info: function() {return `Increases the level of a Pokemon by 1`},
+}
+
+item.abilityPatch = {
+    type: 'key',
+    itemToUse: true,
+    info: function() {return `Re-rolls the ability of a Pokemon`},
+}
+
+item.abilityCapsule = {
+    type: 'key',
+    itemToUse: true,
+    info: function() {return `Unlocks the hidden ability of a Pokemon`},
+}
+
+item.energyRoot = {
+    type: "key",
+    usable: true,
+    effect: function() {  if(saved.geneticOperation > 1) {afkSecondsGenetics = 30*60; this.got--; updateItemBag()} else {document.getElementById("tooltipTop").style.display = "none"; document.getElementById("tooltipMid").style.display = "none"; document.getElementById("tooltipBottom").innerHTML = `Can't do that right now`; openTooltip()}  },
+    info: function() {return `Fast-forwards genetic operation time by 30 minutes. Must be used while an active operation is ongoing`},
+}
+
+item.hpUp = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the HP IV of a Pokemon by 1`},
+}
+
+item.protein = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Attack IV of a Pokemon by 1`},
+}
+
+item.iron = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Defense IV of a Pokemon by 1`},
+}
+
+item.calcium = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Special Attack IV of a Pokemon by 1`},
+}
+
+item.zinc = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Special Defense IV of a Pokemon by 1`},
+}
+
+item.carbos = {
+    type: 'key',
+    vitamin: true,
+    info: function() {return `Increase the Speed IV of a Pokemon by 1`},
+}
+
+
+
 
 item.waterStone = {
     type: "key",
@@ -375,70 +487,12 @@ item.oddRock = {
     info: function() {return `Evolve certain kinds of Pokemon (Must be level ${wildAreaLevel4}+)`},
 }
 
-item.rareCandy = {
-    type: 'key',
-    itemToUse: true,
-    info: function() {return `Increases the level of a Pokemon by 1`},
-}
-
-item.abilityPatch = {
-    type: 'key',
-    itemToUse: true,
-    info: function() {return `Re-rolls the ability of a Pokemon`},
-}
-
-item.abilityCapsule = {
-    type: 'key',
-    itemToUse: true,
-    info: function() {return `Unlocks the hidden ability of a Pokemon`},
-}
-
-item.hpUp = {
-    type: 'key',
-    vitamin: true,
-    info: function() {return `Increase the HP IV of a Pokemon by 1`},
-}
-
-item.protein = {
-    type: 'key',
-    vitamin: true,
-    info: function() {return `Increase the Attack IV of a Pokemon by 1`},
-}
-
-item.iron = {
-    type: 'key',
-    vitamin: true,
-    info: function() {return `Increase the Defense IV of a Pokemon by 1`},
-}
-
-item.calcium = {
-    type: 'key',
-    vitamin: true,
-    info: function() {return `Increase the Special Attack IV of a Pokemon by 1`},
-}
-
-item.zinc = {
-    type: 'key',
-    vitamin: true,
-    info: function() {return `Increase the Special Defense IV of a Pokemon by 1`},
-}
-
-item.carbos = {
-    type: 'key',
-    vitamin: true,
-    info: function() {return `Increase the Speed IV of a Pokemon by 1`},
-}
 
 
-item.bottleCap = {
-    type: "key",
-    info: function() {return `Obtained when acquiring an exceeding number of items. Can be exchanged in the Poke-Mart`},
-}
 
-item.goldenBottleCap = {
-    type: "key",
-    info: function() {return `Obtained in the Battle Frontier. Can be exchanged in the Poke-Mart`},
-}
+
+
+
 
 
 
@@ -495,23 +549,7 @@ item.destinyKnot = {
 
 
 
-item.eviolite = {
-    type: "held",
-    info: function() {return `When held: If a Pokemon has not fully evolved, increase overall defense by x${this.power()}`},
-    power : function() { return 1+(returnItemLevel(this.id)/5)}
-}
 
-item.lightClay = {
-    type: "held",
-    info: function() {return `When held: Increases the duration of positive buffs used by 1 turn and increases damage dealt by ${this.power()}%`},
-    power : function() { return 5+(5*returnItemLevel(this.id))}
-}
-
-item.mentalHerb = {
-    type: "held",
-    info: function() {return `When held: Decreases the duration of negative buffs received by 1 turn and decreases damage taken by ${this.power()}%`},
-    power : function() { return 5+(5*returnItemLevel(this.id))}
-}
 
 
 
@@ -1025,6 +1063,26 @@ item.disarmingVoiceTm = {}
 item.dazzlingGleamTm = {}
 item.playRoughTm = {}
 
+//shop
+
+item.bulkUpTm = {}
+item.thunderWaveTm = {}
+item.toxicTm = {}
+item.willOWispTm = {}
+
+item.calmMindTm = {}
+item.sunnyDayTm = {}
+
+item.crunchTm = {}
+item.xScissorTm = {}
+item.moonblastTm = {}
+
+item.fireBlastTm = {}
+item.hydroPumpTm = {}
+item.thunderTm = {}
+item.hyperBeamTm = {}
+
+
 
 for (const i in item){
     item[i].id = i
@@ -1037,7 +1095,6 @@ for (const i in item){
     if (i.endsWith("Tm")) {
         item[i].move = i.slice(0, -2); 
         item[i].type = "tm";
-
         
         item[i].info = function () { return `Teach the move <span data-move="${move[item[i].move].id}" ><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor(move[item[i].move].type)}">${format(move[item[i].move].id)}</span></span> to a ${joinWithOr(move[item[i].move].moveset)} Pokemon`}        
 

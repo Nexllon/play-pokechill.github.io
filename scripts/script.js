@@ -151,9 +151,13 @@ function updateGameVersion() {
   saved.spiralRewardsClaimed = 0
   }
 
+  if (saved.version<2.2){
+  saved.tutorialStep = `none`
+  }
 
 
-  saved.version = 1.7
+
+  saved.version = 2.3
   document.getElementById(`game-version`).innerHTML = `v${saved.version}`
 }
 
@@ -165,6 +169,11 @@ saved.theme = "dark"
 document.getElementById("settings-theme").addEventListener("change", e => {
   saved.theme = document.getElementById(`settings-theme`).value
   changeTheme()
+});
+
+saved.hideGotPkmn = "false"
+document.getElementById("settings-hide-got").addEventListener("change", e => {
+  saved.hideGotPkmn = document.getElementById(`settings-hide-got`).value
 });
 
 function changeTheme(){
@@ -197,11 +206,33 @@ function changeTheme(){
     document.documentElement.style.setProperty('--light2', '#F9E7B2');
   }
 
+  if (saved.theme === "coral"){
+    document.documentElement.style.setProperty('--dark1', '#3A4048');
+    document.documentElement.style.setProperty('--dark2', '#42424D');
+    document.documentElement.style.setProperty('--light1', '#E07B6A');
+    document.documentElement.style.setProperty('--light2', '#FFE4DB');
+  }
+
+
   if (saved.theme === "onyx"){
     document.documentElement.style.setProperty('--dark1', '#212324');
     document.documentElement.style.setProperty('--dark2', '#282A2B');
     document.documentElement.style.setProperty('--light1', '#3F4144');
     document.documentElement.style.setProperty('--light2', '#D0D1D4');
+  }
+
+  if (saved.theme === "onyx"){
+    document.documentElement.style.setProperty('--dark1', '#1a1717ff');
+    document.documentElement.style.setProperty('--dark2', '#1f2222ff');
+    document.documentElement.style.setProperty('--light1', '#3c3a49ff');
+    document.documentElement.style.setProperty('--light2', '#707083ff');
+  }
+
+  if (saved.theme === "oled"){
+    document.documentElement.style.setProperty('--dark1', '#000000ff');
+    document.documentElement.style.setProperty('--dark2', '#0f0f0fff');
+    document.documentElement.style.setProperty('--light1', '#222225ff');
+    document.documentElement.style.setProperty('--light2', '#37373dff');
   }
 
 }
@@ -275,18 +306,32 @@ const observer = new MutationObserver(mutations => {
   for (const m of mutations) {
     if (m.type === "childList") {
       for (const node of m.addedNodes) {
-        if (node.tagName === "IMG" && node.classList.contains("sprite-trim")) {
+        if (node.nodeType !== 1) continue;
+
+        if (
+          node.tagName === "IMG" &&
+          node.classList.contains("sprite-trim") &&
+          !node.closest("#pokedex-list")
+        ) {
           processSprite(node);
         }
+
         if (node.querySelectorAll) {
-          node.querySelectorAll("img.sprite-trim").forEach(processSprite);
+          node
+            .querySelectorAll("img.sprite-trim:not(#pokedex-list img)")
+            .forEach(processSprite);
         }
       }
     }
 
     if (m.type === "attributes" && m.attributeName === "src") {
       const img = m.target;
-      if (img.tagName === "IMG" && img.classList.contains("sprite-trim")) {
+
+      if (
+        img.tagName === "IMG" &&
+        img.classList.contains("sprite-trim") &&
+        !img.closest("#pokedex-list")
+      ) {
         processSprite(img);
       }
     }
@@ -326,7 +371,7 @@ function learnPkmnMove(id, level, mod) {
         });
 
         //safefail for when no moves are given
-        if (!allMoves.length) return null;
+        if (!allMoves.length) return undefined;
 
         const typeMatch = [];
         const movesetMatch = [];
@@ -367,6 +412,7 @@ function learnPkmnMove(id, level, mod) {
 
 //used for the frontier 
 function learnPkmnMoveSeeded(id, level, mod, seed, exclude = []) {
+
     let attempts = 0;
     const MAX_ATTEMPTS = 100;
 
@@ -389,7 +435,7 @@ function learnPkmnMoveSeeded(id, level, mod, seed, exclude = []) {
             );
         });
 
-        if (!allMoves.length) return null;
+        if (!allMoves.length) return undefined;
 
         const typeMatch = [];
         const movesetMatch = [];
@@ -407,7 +453,7 @@ function learnPkmnMoveSeeded(id, level, mod, seed, exclude = []) {
         return chosenList[Math.floor(rng() * chosenList.length)];
     }
 
-    return null;
+    return undefined;
 }
 
 
@@ -424,6 +470,7 @@ function learnPkmnAbility(id) {
         if (ab.rarity !== tier) return false;
         if (ab.type == undefined) return false;
         if (a == pkmn[id].hiddenAbility?.id) return false
+        if (a == pkmn[id].ability) return false
 
         return ab.type.includes("all") || ab.type.some(t => types.includes(t));
     });
@@ -454,28 +501,22 @@ function newGameIntro(){
 saved.tutorial = false
 saved.tutorialStep = "intro"
 
-document.getElementById("settings-tutorial").addEventListener("change", e => {
-  if (document.getElementById(`settings-tutorial`).value === "enabled") {saved.tutorial = true; openTutorial()}
-  if (document.getElementById(`settings-tutorial`).value === "disabled") {saved.tutorial = false; openTutorial()}
-});
+
 
 
 function openTutorial(){
 
-  if (saved.tutorial != true){
-    document.getElementById("tutorial").style.display = "none"
-    return
-  }
+
 
   if (saved.tutorialStep == "none") {
     document.getElementById("tutorial").style.display = "none"
     return
   }
 
-  if (saved.tutorialStep == "intro") document.getElementById("tutorial-text").innerHTML = `Howdy! I have been assigned to show the ropes, but you can disable me in the settings at any time.<br>Let's start by getting new pokemon shall we? Select "Travel" on the top left menu`
+  if (saved.tutorialStep == "intro") document.getElementById("tutorial-text").innerHTML = `Howdy! I have been assigned to show the ropes<br>Let's start by getting new pokemon shall we? Select "Travel" on the top left menu`
   if (saved.tutorialStep == "travel") document.getElementById("tutorial-text").innerHTML = `You can right click/long tap almost everything on the screen for more info! You can also do this within the info itself too. Try going into the first Wild Area to start catching Pokemon`
   if (saved.tutorialStep == "moves") document.getElementById("tutorial-text").innerHTML = `Right click/long tap a pokemon in your team to set their moves, you can also do this while in battle. If you got any held items, you can also assign them here<br>Once you are ready, press Save and Go! at the top of the screen`
-  if (saved.tutorialStep == "battle") document.getElementById("tutorial-text").innerHTML = `Your team will automatically attack in a set pattern, even while you tab out or close the browser! You can right click/long press on moves or pokemon to see their stats aswell`
+  if (saved.tutorialStep == "battle") document.getElementById("tutorial-text").innerHTML = `Your team will automatically attack in a set pattern, even while you tab out or close the browser! You can right click/long press on moves or pokemon to see their stats aswell. Once you have more Pokemon in your team, you will be able to switch them arround in a fight`
   if (saved.tutorialStep == "battleEnd") {document.getElementById("tutorial-text").innerHTML = `You can check a more in-depth explanation about stats and battle mechanics in the Guide menu. For now, I will take a break... Enjoy your stay!`}
   document.getElementById("tutorial").style.display = "flex"
   
@@ -491,7 +532,7 @@ guide.inspecting = {
 
 guide.stats = {
   name: `Battle: Stats`,
-  description: function() { return `Each species of Pokémon share the same base stats that determine the actual stats of a Pokémon at a given level<br><br>Stats determine how much damage they deal and receive ( see Battle: Moves). The speed stat determines how fast a Pokemon executes a move<br><br>Individual Values, or IV's, multiply base stats, and can be increased by getting multiple copies of Pokemon`}
+  description: function() { return `Each species of Pokémon share the same base stats that determine the actual stats of a Pokémon at a given level<br><br>Stats determine how much damage they deal and receive ( see Battle: Moves). The speed stat determines how fast a Pokemon executes a move<br><br>Individual Values, or IV's, multiply base stats, and can be increased by getting multiple copies of Pokemon<br><br>Depending on their base stats, a Division will be asigned to them. You might use this Division letter to quickly assess which Pokemon can perform better on the short term`}
 }
 
 guide.abilities = {
@@ -506,7 +547,7 @@ guide.experience = {
 
 guide.moves = {
   name: `Battle: Moves`,
-  description: function() { return `Moves are learnt every 7 levels. Moves can be switched by right click/long press on a team pokemon<br><br>Damaging moves are divided into physical and special moves<br>The category of the move determines whether the move's damage depends on the user's Attack or Special Attack stat and the target's Defense or Special Defense`}
+  description: function() { return `Moves are learnt every 7 levels. Moves can be switched by right click/long press on a team pokemon<br><br>Damaging moves are divided into physical and special moves<br>The category of the move determines whether the move's damage depends on the user's Attack or Special Attack stat and the target's Defense or Special Defense<br><br>Some Pokemon might have Signature Moves. Signature Moves are species-dependant moves that a Pokemon learn at level 100. Signature Moves can't be inherited through genetics`}
 }
 
 guide.stab = {
@@ -516,12 +557,12 @@ guide.stab = {
 
 guide.battleFatigue = {
   name: `Battle: Battle Fatigue`,
-  description: function() { return `Pokemon lose a very small fraction of their maximum health when attacking.<br><br>Refreshing the browser restores their health back to full` }
+  description: function() { return `Pokemon lose a very small fraction of their maximum health when attacking. This damage can be mitigated by a sum of the HP, Defense and Special Defense of the Pokemon, meaning bulkier Pokemon can battle for longer` }
 }
 
 guide.statusEffects = {
   name: `Battle: Status Effects`,
-  description: function() { return `Certain moves inflict status effects such as ${tagConfused}, ${tagBurn}, ${tagPoisoned}, ${tagFreeze}, ${tagParalysis} or ${tagSleep}.<br><br>You can further check their effects by right click/long press<br><br>Status effects, like temporal stat changes, will count down with turns` }
+  description: function() { return `Certain moves inflict Status Effects such as ${tagConfused}, ${tagBurn}, ${tagPoisoned}, ${tagFreeze}, ${tagParalysis} or ${tagSleep}.<br><br>You can further check their effects by right click/long press<br><br>Status Effects, like temporal stat changes, will count down with turns. You can only apply one Status Effect at a time` }
 }
 
 guide.weather = {
@@ -532,6 +573,20 @@ guide.weather = {
 guide.shiny = {
   name: `Shiny Pokemon`,
   description: function() { return `At a rate of 1/400, Pokemon can be shiny. These odds can be boosted through different means<br><br>Shiny Pokemon deal 15% more damage. The visual distinction can be toggled from their move menu. This wont affect the damage bonus they get<br><br>Shiny Pokemon do not carry over their evolutions. Instead, genetics must be used`}
+}
+
+guide.genetics = {
+  name: `Genetics: Quick Guide`,
+  description: function() { return `
+    Genetics allows you to modify a Pokemon beyond what is considered normal for the species, here is a quick overview of what you can achieve with operations:
+    <br><br>Shiny Mutation: You can inherit the shiny mutation, with a 100% chance, to members of the same family. You can also attempt to spread a new shiny mutation by using a shiny sample
+    <br><br>IV Boosting: Simply by doing any operation, regardless of the compatibility, the IV's of the host will attempt to increase. Useful for Pokemon with little to no IV's
+    <br><br>IV Inheriting: An advanced alternative to the previous. You can inherit IV's from a species to another depending on factors such as compatibility or genetic-aiding items used
+    <br><br>Move Relearn: When completing an operation, all but the four selected moves of the host will be reset, meaning you can attempt to get stronger moves with each operation
+    <br><br>Move Inheriting: An advanced alternative to the previous, you can inherit moves from the sample that would otherwise not be available to you through learning
+    <br><br>Ability Relearn: When completing an operation, your ability will reset, unless you use an Everstone. This can be used to get more useful abilities in the process
+    <br><br>Ability Inheriting: An advanced alternative to the previous. Using a Destiny Knot, you can swap abilities with the sample, getting access to otherwise-impossible combinations
+    `}
 }
 
 guide.compatibility = {
@@ -561,7 +616,7 @@ function setGuide(){
         document.getElementById("tooltipTop").style.display = `none`
         document.getElementById("tooltipTitle").innerHTML = `${guide[i].name}`
         document.getElementById("tooltipMid").style.display = `none`
-        document.getElementById("tooltipBottom").innerHTML = `${guide[i].description()}`
+        document.getElementById("tooltipBottom").innerHTML = `<span style="overflow-y:scroll; max-height:25rem; display:inline-block;">${guide[i].description()}</span>`
 
 
         if (i === "stats") {
@@ -622,6 +677,8 @@ function infoPkmn(){
     console.table([
       {command:"givePkmn(pkmn.NAME, LEVEL)", effect:"Give Pokemon"},
       {command:"pkmn.NAME.level=LEVEL", effect:"Modify Pokemon level"},
+      {command:"pkmn.NAME.shiny=true", effect:"Modify Pokemon shiny status"},
+      {command:"pkmn.NAME.ivs.hp=NUMBER", effect:"Modify Pokemon ivs (hp, atk, satk, def, sdef, spe)"},
       {command:"pkmn.NAME.movepool.push(move.NAME.id)", effect:"Add Pokemon Move"},
       {command:"pkmn.NAME.ability=ability.NAME.id", effect:"Modify Pokemon Ability"},
       {command:"pkmn.NAME.hiddenAbilityUnlocked=true", effect:"Unlock Hidden Ability"},
@@ -645,6 +702,9 @@ function infoRotation(){
 
 function infoMisc(){
     console.table([
+      {command:"saved.overrideBattleTimer=NUMBER", effect:"Alter Battle Speed (Default 2000)"},
+      {command:"debugGetPkmn(LEVEL,'shiny')", effect:"Get all Pokemon at certain level. Shiny is optional"},
+      {command:"debugSetIvs(NUMBER)", effect:"Set all Pokemon IV's. Maximum 6"},
       {command:"saved.geneticOperation=1", effect:"Complete Genetics Operation"},
       ]);
 }
