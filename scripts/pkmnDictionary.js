@@ -15604,7 +15604,7 @@ pkmn.quaquaval = {
   type: ["water", "fighting"],
   bst: {
     hp: 85,
-    atk: 120,
+    atk: 100,
     def: 80,
     satk: 85,
     sdef: 75,
@@ -16721,4 +16721,5 @@ ribbon.smile ={
     name: `Smile Ribbon`,
     description: `Awarded very rarely for spending a lot of time together`
 }
+
 
