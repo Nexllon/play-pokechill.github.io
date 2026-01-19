@@ -1940,7 +1940,7 @@ document.addEventListener("contextmenu", e => {
 
 
         if (el.dataset.help === `searchDictionary`) document.getElementById("tooltipTitle").innerHTML = `Keywords`
-        if (el.dataset.help === `searchDictionary`) document.getElementById("tooltipBottom").innerHTML = `Operators:<br>![keyword]: Exclude from search<br>[keywordA] or [keywordB]: Search keywordA OR keywordB<br>[keywordA] [keywordB]: Search for keywordA AND keywordB<br><br>Pokemon keywords:<br>unobtainable, wild, park, event, frontier, shiny, caught, uncaught, [type], [hidden ability]<br><br>Move keywords:<br>physical, special, [type], [ability]`
+        if (el.dataset.help === `searchDictionary`) document.getElementById("tooltipBottom").innerHTML = `Operators:<br>![keyword]: Exclude from search<br>[keywordA] or [keywordB]: Search keywordA OR keywordB<br>[keywordA] [keywordB]: Search for keywordA AND keywordB<br><br>Pokemon keywords:<br>unobtainable, wild, park, event, frontier, shiny, caught, [type], [hidden ability]<br><br>Move keywords:<br>physical, special, [type], [ability]`
         if (el.dataset.help === `searchDictionary`) document.getElementById("dictionary-search").blur()
 
 
