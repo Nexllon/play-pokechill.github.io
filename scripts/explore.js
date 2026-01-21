@@ -4130,6 +4130,7 @@ function updatePokedex(){
         if (document.getElementById(`pokedex-filter-evolution`).value == "level-only" && !missingLevelEvolution  ) continue
 
 
+        if (pkmn[i].tagObtainedIn == "unobtainable") continue
 
         totalPokemon++
 
@@ -4541,7 +4542,6 @@ if (document.getElementById("pokedex-search").value!="") {
 
     document.getElementById(`pokedex-total`).style.display = "flex"
     if (document.getElementById(`pokedex-filter-level`).value !== "all") document.getElementById(`pokedex-total`).style.display = "none"
-    if (document.getElementById(`pokedex-filter-shiny`).value !== "all") document.getElementById(`pokedex-total`).style.display = "none"
     if (document.getElementById(`pokedex-filter-tag`).value !== "all") document.getElementById(`pokedex-total`).style.display = "none"
     if (document.getElementById(`pokedex-filter-ability`).value !== "all") document.getElementById(`pokedex-total`).style.display = "none"
     if (document.getElementById(`pokedex-filter-evolution`).value !== "all") document.getElementById(`pokedex-total`).style.display = "none"
