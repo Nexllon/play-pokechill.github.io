@@ -201,6 +201,23 @@ function loadFromText() {
   }
 }
 
+// paste from clipboard using the API
+async function pasteFromClipboard() {
+  const input = document.getElementById("text-data-raw");
+  if (!input) {
+    alert("Element with id 'text-data-raw' not found");
+    return;
+  }
+
+  try {
+    const text = await navigator.clipboard.readText();
+    input.value = text;
+    alert("Data pasted successfully!");
+  } catch (err) {
+    alert("Could not paste from clipboard. Please paste manually or grant clipboard permissions.");
+  }
+}
+
 function textData() {
   saveGame();
   document.getElementById("tooltipTop").style.display = `none`;
@@ -217,14 +234,18 @@ function textData() {
     document.getElementById("text-data-raw").value = savedData;
 
     document.getElementById("tooltipBottom").innerHTML = `
-      <div style="display:flex;width:100%; align-items:center;justify-content:center">
-        <div onClick='navigator.clipboard.writeText(document.getElementById("text-data-raw").value)' 
-             style="cursor:pointer; font-size:2rem; width:50%" id="prevent-tooltip-exit">
-          Copy to Clipboard
+      <div style="display:flex;width:100%; align-items:center;justify-content:center; flex-wrap:wrap;">
+        <div onClick='navigator.clipboard.writeText(document.getElementById("text-data-raw").value); alert("Data copied to the Clipboard!");' 
+             style="cursor:pointer; font-size:2rem; width:33%; padding:10px;" id="prevent-tooltip-exit">
+          Copy
+        </div>
+        <div onClick='pasteFromClipboard()' 
+             style="cursor:pointer; font-size:2rem; width:33%; padding:10px;" id="prevent-tooltip-exit">
+          Paste
         </div>
         <div onClick='loadFromText()' 
-             style="cursor:pointer; font-size:2rem; width:50%" id="prevent-tooltip-exit">
-          Load Code
+             style="cursor:pointer; font-size:2rem; width:33%; padding:10px;" id="prevent-tooltip-exit">
+          Load
         </div>
       </div>
     `;
@@ -235,15 +256,22 @@ function textData() {
     `;
 
     document.getElementById("tooltipBottom").innerHTML = `
-      <div onClick='loadFromText()' 
-           style="cursor:pointer; font-size:2rem; width:100%" id="prevent-tooltip-exit">
-        Load Code
+      <div style="display:flex;width:100%; align-items:center;justify-content:center;">
+        <div onClick='pasteFromClipboard()' 
+             style="cursor:pointer; font-size:2rem; width:50%; padding:10px;" id="prevent-tooltip-exit">
+          Paste
+        </div>
+        <div onClick='loadFromText()' 
+             style="cursor:pointer; font-size:2rem; width:50%; padding:10px;" id="prevent-tooltip-exit">
+          Load
+        </div>
       </div>
     `;
   }
 
   openTooltip();
 }
+
 
 
 
