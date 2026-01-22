@@ -480,7 +480,7 @@ ability.rivalry = {
 ability.pickPocket = {
     type: [`dark`, `flying`, `normal`],
     rarity: 2,
-    info: function() {return `Increases the weight of rare item drops by 1% (Can stack)`},
+    info: function() {return `Increases the weight of rare item drops by 1% (Can stack). Works always for everyone regardless of the user`},
 }
 
 ability.brittleArmor = {
@@ -2263,9 +2263,9 @@ move.furyCutter = {
 move.infestation = {  
     moveset: [`bug`],
     split: "special",
-    rarity: 1,
+    rarity: 2,
     type: "bug",
-    power: 15,
+    power: 20,
     info: function() {return `Hits 2-5 times`},
     multihit: [2,5],
 }
