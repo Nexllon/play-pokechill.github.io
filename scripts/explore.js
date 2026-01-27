@@ -801,14 +801,10 @@ function leaveCombat(){
         item[rewardId].newItem++
         item[rewardId].got++
 
-        item.goldenBottleCap.newItem++
-        item.goldenBottleCap.got++
+        item.goldenBottleCap.newItem+=2
+        item.goldenBottleCap.got+=2
 
-        // extra every 3 rewards
-        if ((saved.spiralRewardsClaimed + i + 1) % 3 === 0) {
-            item.goldenBottleCap.newItem++
-            item.goldenBottleCap.got++
-        }
+
 
         
     }
@@ -836,8 +832,12 @@ function leaveCombat(){
                     rewards.push(spiralingRewards[i].item)
                 }
                 const rewardId = arrayPick(rewards)
+
+                if (saved.factoryRewardsClaimed<50){
                 item[rewardId].newItem++
                 item[rewardId].got++
+                }
+
 
                 item.goldenBottleCap.newItem++
                 item.goldenBottleCap.got++
@@ -5671,8 +5671,8 @@ for (const i in areas) {
 
   if (areas[i].tier==1) areas[i].itemReward = { 1 : { item: item.goldenBottleCap.id, amount: 3 }, 2 : { item: arrayPick(exclusiveFrontierPkmn).id, amount: 1 } };
   if (areas[i].tier==2) areas[i].itemReward = { 1 : { item: item.goldenBottleCap.id, amount: 3 }, 2 : { item: arrayPick(exclusiveFrontierPkmn).id, amount: 1 } };
-  if (areas[i].tier==3) areas[i].itemReward = { 1 : { item: item.goldenBottleCap.id, amount: 3 }, 2 : { item: arrayPick(exclusiveFrontierPkmn).id, amount: 1 } };
-  if (areas[i].tier==4) areas[i].itemReward = { 1 : { item: item.goldenBottleCap.id, amount: 3 }, 2 : { item: arrayPick(exclusiveFrontierPkmn).id, amount: 1 } };
+  if (areas[i].tier==3) areas[i].itemReward = { 1 : { item: item.goldenBottleCap.id, amount: 4 }, 2 : { item: arrayPick(exclusiveFrontierPkmn).id, amount: 1 } };
+  if (areas[i].tier==4) areas[i].itemReward = { 1 : { item: item.goldenBottleCap.id, amount: 6 }, 2 : { item: arrayPick(exclusiveFrontierPkmn).id, amount: 1 } };
 
   let divisionToUse = "C"
   if (rotationFrontierCurrent == 2) divisionToUse = "B"
