@@ -4154,19 +4154,72 @@ document.getElementById("pokedex-search").addEventListener("keydown", e => {
         results = items.map(item => ({ item }))
       }
     }
-    
-    // expand results to include evolutionary families
-    let expandedResults = new Set()
-    results.forEach(result => {
-      const family = getEvolutionFamily(result.item)
-      family.forEach(member => {
-        // only add if the member exists in the current fusePkmn index
-        const memberInIndex = fusePkmn.getIndex().docs.find(doc => doc === member)
-        if (memberInIndex) {
-          expandedResults.add(member)
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //this dumbaah code expands the search to families during x conditions
+        let shouldExpandFamilies = true;
+        if (results.length > 0 && includeTerms.length > 0) {
+        let hasAbilityMatch = false;
+        let hasMoveMatch = false;
+                const sampleSize = Math.min(3, results.length);
+        for (let i = 0; i < sampleSize; i++) {
+            const item = results[i].item;
+            includeTerms.forEach(term => {
+            const lowerTerm = term.toLowerCase();
+            if (item.ability && item.ability.toLowerCase().includes(lowerTerm)) hasAbilityMatch = true;
+            if (item.hiddenAbility && item.hiddenAbility.id && item.hiddenAbility.id.toLowerCase().includes(lowerTerm)) hasAbilityMatch = true;
+            if (item.movepool && item.movepool.some(move => move.toLowerCase().includes(lowerTerm))) hasMoveMatch = true;
+            });
         }
-      })
-    })
+        
+        if (hasAbilityMatch || hasMoveMatch) {
+            shouldExpandFamilies = false;
+        }
+        }
+
+        let expandedResults = new Set();
+
+        if (shouldExpandFamilies) {
+        results.forEach(result => {
+            const family = getEvolutionFamily(result.item);
+            family.forEach(member => {
+            // only add if the member exists in the current fusePkmn index
+            const memberInIndex = fusePkmn.getIndex().docs.find(doc => doc === member);
+            if (memberInIndex) {
+                expandedResults.add(member);
+            }
+            });
+        });
+        results = Array.from(expandedResults).map(item => ({ item }));
+        } else {
+        //dont expand family
+        expandedResults = new Set(results.map(r => r.item));
+        results = Array.from(expandedResults).map(item => ({ item }));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     results = Array.from(expandedResults).map(item => ({ item }))
     
