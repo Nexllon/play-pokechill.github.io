@@ -269,13 +269,11 @@ function setSearchTags() {
     for (const e in pkmn){
         if (pkmn[e].tagObtainedIn == undefined) {
             const family = getEvolutionFamily(pkmn[e]);
-            // Solo verificar si hay miembros DIRECTAMENTE obtenibles (no contar los que heredan de la familia)
             const familyHasDirectObtainable = Array.from(family).some(member => {
                 return member.tagObtainedIn !== undefined && member.tagObtainedIn !== "unobtainable";
             });
             
             if (!familyHasDirectObtainable) {
-                // Marcar toda la familia como unobtainable
                 for (const member of family) {
                     if (member.tagObtainedIn === undefined) {
                         member.tagObtainedIn = "unobtainable";
