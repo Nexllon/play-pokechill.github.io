@@ -801,8 +801,8 @@ function leaveCombat(){
         item[rewardId].newItem++
         item[rewardId].got++
 
-        item.goldenBottleCap.newItem++
-        item.goldenBottleCap.got++
+        item.goldenBottleCap.newItem+=2
+        item.goldenBottleCap.got+=2
         
     }
 
