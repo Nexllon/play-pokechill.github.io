@@ -2350,7 +2350,7 @@ function exploreCombatPlayer() {
 
         //stab
         let stabBonus = 1.5
-        if (attacker.type.includes(moveType) && testAbility(`active`,  ability.adaptability.id ) ) stabBonus += 0.2
+        if (testAbility(`active`,  ability.adaptability.id )) stabBonus += 0.2
         if (attacker.type.length==1 ) stabBonus += 0.2
 
         if (attacker.type.includes(moveType)) totalPower *=stabBonus
@@ -2740,6 +2740,7 @@ function typeEffectiveness(attacking, defending) {
     if (result == 0.5) result = 1.5
     if (result == 1.5) result = 0.75
     if (result == 2.25) result = 0.5
+    if (result == 0.25) result = 2.25
   }
 
 
