@@ -853,7 +853,7 @@ frontierArray.sort((a, b) => a.data.tier - b.data.tier);
         document.getElementById("tooltipBottom").style.display = `inline`
 
 
-        if (item[ttdata].type==="held"){
+        if (item[ttdata].type==="held" || item[ttdata].heldBonusPower){
             document.getElementById("tooltipTitle").innerHTML = format(ttdata) + `<br>Level ${returnItemLevel(ttdata)}`
             document.getElementById("tooltipMid").innerHTML = `${returnItemLevel(ttdata,"stars")}<br>${item[ttdata].got} in total ${returnItemLevel(ttdata,"left")}`
         }
