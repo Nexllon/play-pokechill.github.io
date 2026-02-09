@@ -8742,5 +8742,7 @@ window.addEventListener('load', function() {
     pkmnWalkCandidates()
     arceusCheck()
     assignShopDecor()
+
+    if (saved.arenaCard1 == undefined) createArenaCards()
     //updateTeamExp()
 });
