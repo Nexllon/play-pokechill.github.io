@@ -8654,7 +8654,7 @@ function renamePokemon(){
 
         document.getElementById("pkmn-editor-nickname").textContent = pkmn[currentEditedPkmn].nickname
 
-        updatePreviewTeam()
+        if (saved.currentArea == undefined) updatePreviewTeam()
             
 
         closeTooltip()
