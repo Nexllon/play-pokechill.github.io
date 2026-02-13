@@ -3927,7 +3927,7 @@ pkmn.moltres = {
         sdef: 85,
         spe: 90,
     },
-    hiddenAbility: ability.windRider,
+    hiddenAbility: ability.fieryPelt,
     lore : `The warmth of spring. Its fire does not scorch the world, but stirs it awake, melting snow and kindling new life. The cold loosens its hold as it passes, and the land is renewed by heat and light.`,
     eggMove : move.magmaStorm
 }
